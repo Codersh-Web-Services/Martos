@@ -2981,3 +2981,46 @@ form#desktopfilterform input[type='checkbox'] {
   width: 40px;
   height: 40px
 }
+
+.Facet select,
+input#Filter-Price-LTE {
+  font-size: 3rem;
+}
+
+.Facet {
+  display: flex;
+}
+
+.Facet span {
+  flex-basis: 300px;
+}
+
+.curreny-formfield {
+  padding: revert;
+}
+
+.Facet *:focus-visible {
+  outline: initial;
+  outline-offset: initial;
+  box-shadow: initial;
+}
+
+@media (max-width : 991px) {
+  .Facet {
+    flex-direction: column;
+  }
+
+  .Facet span {
+    flex-basis: initial;
+  }
+
+  form#desktopfilterform {
+
+    font-size: 2rem;
+  }
+
+  .Facet select,
+  input#Filter-Price-LTE {
+    font-size: 1rem;
+  }
+}
