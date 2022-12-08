@@ -10,7 +10,7 @@
         <div class="Facet">
           <span>{{- filter.label | escape }} </span>
           <div class="wrapper">
-            <select name="Filter-{{ filter.param_name | escape }}-{{ forloop.index }}">
+            <select name="{{ filter.param_name | escape }}">
               <option value="" name="">Select</option>
               {%- for value in filter.values -%}
                 <option
