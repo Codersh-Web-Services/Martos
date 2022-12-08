@@ -105,7 +105,6 @@
 {% javascript %}
   const form = document.querySelector('#desktopfilterform').addEventListener('submit', (e) => {
     e.preventDefault();
-    console.log(e.target);
     const formdata = new FormData(document.querySelector('#desktopfilterform'));
     let searchparams = '?';
     for (const [key, value] of formdata) {

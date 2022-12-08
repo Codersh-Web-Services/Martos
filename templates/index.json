@@ -1,5 +1,10 @@
 {
   "sections": {
+    "a7201764-da23-4d68-bf31-5f3c874a024c": {
+      "type": "homepage-filter",
+      "settings": {
+      }
+    },
     "image_banner": {
       "type": "image-banner",
       "blocks": {
@@ -83,7 +88,7 @@
       "settings": {
         "title": "Featured products",
         "heading_size": "h2",
-        "description": "",
+        "description": "<p><\/p>",
         "show_description": false,
         "description_style": "body",
         "collection": "all",
@@ -212,6 +217,7 @@
     }
   },
   "order": [
+    "a7201764-da23-4d68-bf31-5f3c874a024c",
     "image_banner",
     "rich_text",
     "featured_collection",
