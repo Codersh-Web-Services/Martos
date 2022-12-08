@@ -66,14 +66,13 @@
             open
           {% endif %}
         >
-          <summary class="facets__summary caption-large focus-offset">
+          <summary>
             <div>
               <span> Budget of {{ filter.label | escape }}</span>
             </div>
           </summary>
           <div
             id="Facet-{{ forloop.index }}-{{ section.id }}"
-            class="{% if filter_type == 'horizontal' %}facets__display{% else %}facets__display-vertical{% endif %}"
           >
             <div class="{% if filter_type == 'horizontal' %}facets__header{% else %}facets__header-vertical{% endif %}">
               {%- assign max_price_amount = filter.range_max | money | strip_html | escape -%}
@@ -90,9 +89,6 @@
                   type="number"
                   min="0"
                 >
-                <label class="field__label" for="Filter-{{ filter.label | escape }}-LTE">
-                  {{- 'products.facets.to' | t -}}
-                </label>
               </div>
             </price-range>
           </div>
