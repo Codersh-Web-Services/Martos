@@ -73,7 +73,8 @@
     for (const [key, value] of formdata) {
       searchparams += `${key}=${value}&`;
     }
-    window.location.href = `/collections/all${searchparams}`;
+    filterableparams = searchparams.replace(' ', '+');
+    window.location.href = `/collections/all${filterableparams}`;
   });
 {% endjavascript %}
 {% schema %}
