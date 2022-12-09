@@ -26,9 +26,7 @@
                     {%- endif -%}
                     )</option>
 
-              {% if prevValue != name[0] %}
                   {% assign prevValue = name[0]%}
-                  {%endif %}
                 {%- endfor -%}
               </select>
           </div>
