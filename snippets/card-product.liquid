@@ -53,6 +53,7 @@
             <div class="media media--transparent media--hover-effect">
               {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
               <div class="absolute-icons">
+                {% if card_product.metafields.feature.icon1 %}
                 <img
                   width="20"
                   height="20"
@@ -60,6 +61,9 @@
                   src="{{ card_product.metafields.feature.icon1 | image_url  }}"
                   alt="{{ card_product.metafields.feature.icon1.alt}}icon"
                 >
+                  {%endif %}
+                {% if card_product.metafields.feature.icon2 %}
+
                 <img
                   width="20"
                   height="20"
@@ -67,6 +71,9 @@
                   src="{{ card_product.metafields.feature.icon2 | image_url  }}"
                   alt="{{ card_product.metafields.feature.icon2.alt}}icon"
                 >
+                  {%endif%}
+                {% if card_product.metafields.feature.icon3 %}
+
                 <img
                   width="20"
                   height="20"
@@ -74,6 +81,9 @@
                   src="{{ card_product.metafields.feature.icon3 | image_url  }}"
                   alt="{{ card_product.metafields.feature.icon3.alt}}icon"
                 >
+                  {%endif%}
+                {% if card_product.metafields.feature.icon4 %}
+                  
                 <img
                   width="20"
                   height="20"
@@ -81,6 +91,7 @@
                   src="{{ card_product.metafields.feature.icon4 | image_url  }}"
                   alt="{{ card_product.metafields.feature.icon4.alt}}icon"
                 >
+                  {%endif%}
               </div>
               <img
                 srcset="
