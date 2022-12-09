@@ -53,12 +53,34 @@
             <div class="media media--transparent media--hover-effect">
               {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
               <div class="absolute-icons">
-                
-                  <img width="20" height="20" loading="lazy" src="{{ product.metafields.feature.icon1 | image_url  }}" alt="{{ product.metafields.feature.icon1.alt}}icon">
-                  <img width="20" height="20" loading="lazy" src="{{ product.metafields.feature.icon2 | image_url  }}" alt="{{ product.metafields.feature.icon2.alt}}icon">
-                  <img width="20" height="20" loading="lazy" src="{{ product.metafields.feature.icon3 | image_url  }}" alt="{{ product.metafields.feature.icon3.alt}}icon">
-                  <img width="20" height="20" loading="lazy" src="{{ product.metafields.feature.icon4 | image_url  }}" alt="{{ product.metafields.feature.icon4.alt}}icon">
-        
+                <img
+                  width="20"
+                  height="20"
+                  loading="lazy"
+                  src="{{ card_product.metafields.feature.icon1 | image_url  }}"
+                  alt="{{ card_product.metafields.feature.icon1.alt}}icon"
+                >
+                <img
+                  width="20"
+                  height="20"
+                  loading="lazy"
+                  src="{{ card_product.metafields.feature.icon2 | image_url  }}"
+                  alt="{{ card_product.metafields.feature.icon2.alt}}icon"
+                >
+                <img
+                  width="20"
+                  height="20"
+                  loading="lazy"
+                  src="{{ card_product.metafields.feature.icon3 | image_url  }}"
+                  alt="{{ card_product.metafields.feature.icon3.alt}}icon"
+                >
+                <img
+                  width="20"
+                  height="20"
+                  loading="lazy"
+                  src="{{ card_product.metafields.feature.icon4 | image_url  }}"
+                  alt="{{ card_product.metafields.feature.icon4.alt}}icon"
+                >
               </div>
               <img
                 srcset="
