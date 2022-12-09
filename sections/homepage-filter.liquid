@@ -7,59 +7,55 @@
     {%- assign total_active_values = total_active_values | plus: filter.active_values.size -%}
     {% case filter.type %}
       {% when 'boolean', 'list' %}
-        <div class="Facet">
-          <span>{{- filter.label | escape }} </span>
-          <div class="wrapper">
-            <select name="{{ filter.param_name | escape }}">
-              <option value="" name="">Select</option>
-              {%- for value in filter.values -%}
-                <option
-                  name="{{ value.param_name }}"
-                  value="{{ value.value }}"
-                >
-                  {{- value.label | escape }} (
-                  {%- if value.count == 1 -%}
-                    {{- 'products.facets.product_count_simple.one' | t: count: value.count -}}
-                  {%- else -%}
-                    {{- 'products.facets.product_count_simple.other' | t: count: value.count -}}
-                  {%- endif -%}
-                  )
-                </option>
-              {%- endfor -%}
-            </select>
-          </div>
-        </div>
-      {% when 'price_range' %}
-        {% liquid
-          assign currencies_using_comma_decimals = 'ANG,ARS,BRL,BYN,BYR,CLF,CLP,COP,CRC,CZK,DKK,EUR,HRK,HUF,IDR,ISK,MZN,NOK,PLN,RON,RUB,SEK,TRY,UYU,VES,VND' | split: ','
-          assign uses_comma_decimals = false
-          if currencies_using_comma_decimals contains cart.currency.iso_code
-            assign uses_comma_decimals = true
-          endif
-        %}
+        {% if filter.label == 'More filters' %}
+          <div class="Facet">
+            {% assign tag_name = filter.values %}
+            {%- for value in filter.values -%}
+              {% assign name = value.value | split: '__' %}
+              {% if prevValue != name[0] %}
+            <span>{{- name[0] }} </span>
+              <select name="{{ filter.param_name | escape }}">
+                <option value="" name="">Select</option>
+                {%endif%}
+                  <option name="{{ value.param_name }}"
+                    value="{{ value.value }}" >{{ name[1] }}  (
+                    {%- if value.count == 1 -%}
+                      {{- 'products.facets.product_count_simple.one' | t: count: value.count -}}
+                    {%- else -%}
+                      {{- 'products.facets.product_count_simple.other' | t: count: value.count -}}
+                    {%- endif -%}
+                    )</option>
 
-        <div
-          class="Facet"
-        >
-          <span> Budget of {{ filter.label | escape }}</span>
-          <div class="{% if filter_type == 'horizontal' %}facets__header{% else %}facets__header-vertical{% endif %}">
-            {%- assign max_price_amount = filter.range_max | money | strip_html | escape -%}
+              {% if prevValue != name[0] %}
+                  {% assign prevValue = name[0]%}
+                  {%endif %}
+                {%- endfor -%}
+              </select>
           </div>
-          <price-range class="facets__price">
-            <div class="field">
-              {%- if filter_type != 'vertical' -%}
-                <span class="field-currency">{{ cart.currency.symbol }}</span>
-              {%- endif -%}
-              <input
-                class="curreny-formfield"
-                name="{{ filter.max_value.param_name }}"
-                id="Filter-{{ filter.label | escape }}-LTE"
-                type="number"
-                min="0"
-              >
+        {% else %}
+          <div class="Facet">
+            <span>{{- filter.label | escape }} </span>
+            <div class="wrapper">
+              <select name="{{ filter.param_name | escape }}">
+                <option value="" name="">Select</option>
+                {%- for value in filter.values -%}
+                  <option
+                    name="{{ value.param_name }}"
+                    value="{{ value.value }}"
+                  >
+                    {{- value.label | escape }} (
+                    {%- if value.count == 1 -%}
+                      {{- 'products.facets.product_count_simple.one' | t: count: value.count -}}
+                    {%- else -%}
+                      {{- 'products.facets.product_count_simple.other' | t: count: value.count -}}
+                    {%- endif -%}
+                    )
+                  </option>
+                {%- endfor -%}
+              </select>
             </div>
-          </price-range>
-        </div>
+          </div>
+        {% endif %}
     {% endcase %}
   {%- endfor -%}
   <input type="submit" value="search">
