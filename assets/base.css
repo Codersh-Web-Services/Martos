@@ -253,6 +253,38 @@ html.no-js .no-js-hidden {
   padding: 0;
   margin: 0 auto;
 }
+/* css changes */
+
+form#desktopfilterform {
+  font-size: 2rem;
+}
+
+form#desktopfilterform input[type='checkbox'] {
+  display: inline-block;
+  width: auto;
+  width: 40px;
+  height: 40px
+}
+
+.Facet select,
+input#Filter-Price-LTE {
+  font-size: 1.5rem;
+  font-weight: 400;
+  padding: 0.2rem 0.3rem;
+}
+
+.Facet span {
+  flex-basis: 200px;
+}
+
+form#desktopfilterform input[type=submit] {
+  margin-top: 1rem;
+  padding: 0.5rem 2rem;
+  font-size: 1.5rem;
+  text-transform: capitalize;
+  font-weight: 500;
+  cursor: pointer;
+}
 
 @media screen and (min-width: 750px) {
   .page-width {
