@@ -255,7 +255,9 @@ html.no-js .no-js-hidden {
 }
 /* css changes */
 .Facet {
-  align-items: center;
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
 }
 
 form#desktopfilterform {
