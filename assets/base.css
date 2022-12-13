@@ -258,6 +258,10 @@ html.no-js .no-js-hidden {
   align-items: center;
 }
 
+form#desktopfilterform {
+  font-size: 2rem !important;
+}
+
 
 form#desktopfilterform {
   font-size: 2rem;
@@ -268,6 +272,7 @@ input#Filter-Price-LTE {
   font-size: 1.5rem !important;
   font-weight: 400;
   padding: 0.2rem 0.3rem;
+  width: 300px;
 }
 
 .Facet span {
