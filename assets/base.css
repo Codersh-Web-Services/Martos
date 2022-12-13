@@ -259,13 +259,9 @@ html.no-js .no-js-hidden {
 }
 
 form#desktopfilterform {
-  font-size: 2rem !important;
+  font-size: 1.5rem !important;
 }
 
-
-form#desktopfilterform {
-  font-size: 2rem;
-}
 
 .Facet select,
 input#Filter-Price-LTE {
