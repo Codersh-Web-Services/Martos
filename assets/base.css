@@ -2969,11 +2969,16 @@ details-disclosure>details {
 
 /* misc css  */
 
-form#desktopfilterform {
+/* form#desktopfilterform {
   width: 60vw;
   margin: auto;
   font-size: 4rem;
+} */
+
+form#desktopfilterform {
+  font-size: 1.5rem;
 }
+
 
 form#desktopfilterform input[type='checkbox'] {
   display: inline-block;
@@ -2982,17 +2987,33 @@ form#desktopfilterform input[type='checkbox'] {
   height: 40px
 }
 
-.Facet select,
+/* .Facet select,
 input#Filter-Price-LTE {
   font-size: 3rem;
+} */
+
+.Facet select,
+input#Filter-Price-LTE {
+  font-size: 1.5rem;
+  font-weight: 400;
+  padding: 0.2rem 0.3rem;
+  width: 300px;
 }
 
 .Facet {
   display: flex;
+    align-items: center;
+    margin: 1rem 0;
 }
 
-.Facet span {
+/* .Facet span {
   flex-basis: 300px;
+} */
+
+.Facet span {
+  flex-basis: 200px;
+  font-size: 1.8rem;
+  text-transform: capitalize;
 }
 
 .curreny-formfield {
@@ -3003,6 +3024,15 @@ input#Filter-Price-LTE {
   outline: initial;
   outline-offset: initial;
   box-shadow: initial;
+}
+
+form#desktopfilterform input[type='submit'] {
+  margin-top: 1rem;
+  padding: 0.5rem 2rem;
+  font-size: 1.5rem;
+  text-transform: capitalize;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 @media (max-width : 991px) {
