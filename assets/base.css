@@ -2976,6 +2976,8 @@ details-disclosure>details {
 } */
 
 form#desktopfilterform {
+  width: 60vw;
+  margin: auto;
   font-size: 1.5rem;
 }
 
