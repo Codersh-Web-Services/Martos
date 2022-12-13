@@ -276,7 +276,7 @@ input#Filter-Price-LTE {
 .Facet span {
   flex-basis: 200px !important;
   font-size: 1.8rem;
-  text-trnsfor: capitalize;
+  text-transform: capitalize;
 }
 
 form#desktopfilterform input[type='submit'] {
