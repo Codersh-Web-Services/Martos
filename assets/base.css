@@ -254,30 +254,27 @@ html.no-js .no-js-hidden {
   margin: 0 auto;
 }
 /* css changes */
+.Facet {
+  align-items: center;
+}
+
 
 form#desktopfilterform {
   font-size: 2rem;
 }
 
-form#desktopfilterform input[type='checkbox'] {
-  display: inline-block;
-  width: auto;
-  width: 40px;
-  height: 40px
-}
-
 .Facet select,
 input#Filter-Price-LTE {
-  font-size: 1.5rem;
+  font-size: 1.5rem !important;
   font-weight: 400;
   padding: 0.2rem 0.3rem;
 }
 
 .Facet span {
-  flex-basis: 200px;
+  flex-basis: 200px !important;
 }
 
-form#desktopfilterform input[type=submit] {
+form#desktopfilterform input[type='submit'] {
   margin-top: 1rem;
   padding: 0.5rem 2rem;
   font-size: 1.5rem;
