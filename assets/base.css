@@ -2978,7 +2978,7 @@ details-disclosure>details {
 form#desktopfilterform {
   font-size: 1.5rem;
   width: 100vw;
-  margin: auto;
+  margin: 0 auto;
 }
 
 
