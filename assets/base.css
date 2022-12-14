@@ -2991,7 +2991,7 @@ form#desktopfilterform input[type='checkbox'] {
 
 .Facet select,
 input#Filter-Price-LTE {
-  font-size: 6rem;
+  font-size: 3rem;
 
   background: transparent;
   text-transform: uppercase;
