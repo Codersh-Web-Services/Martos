@@ -61,6 +61,12 @@
   text-transform: uppercase;
 
 }
+
+@media (max-width:991px){
+  .Facet select, input#Filter-Price-LTE {
+    font-size: 2rem;
+  }
+}
 {% endstyle %}
 {% javascript %}
   const form = document.querySelector('#desktopfilterform').addEventListener('submit', (e) => {

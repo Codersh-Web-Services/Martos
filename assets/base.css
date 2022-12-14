@@ -3000,7 +3000,7 @@ input#Filter-Price-LTE {
   color: #d22426;
   border: 0;
   font-family: 'chivo';
-  width: 300px;
+  max-width: 300px;
   cursor: pointer;
 }
 
