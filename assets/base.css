@@ -2969,11 +2969,7 @@ details-disclosure>details {
 
 /* misc css  */
 
-/* form#desktopfilterform {
-  width: 60vw;
-  margin: auto;
-  font-size: 4rem;
-} */
+
 
 form#desktopfilterform {
   width: 60vw;
@@ -2991,26 +2987,28 @@ form#desktopfilterform input[type='checkbox'] {
   height: 40px
 }
 
-/* .Facet select,
-input#Filter-Price-LTE {
-  font-size: 3rem;
-} */
+
 
 .Facet select,
 input#Filter-Price-LTE {
-  font-size: 1.5rem;
+  font-size: 6rem;
+
+  background: transparent;
+  text-transform: uppercase;
   font-weight: 600;
   padding: .2rem .3rem;
   color: #d22426;
   border: 0;
-  width: 200px;
+  font-family: 'chivo';
+  width: 300px;
+  cursor: pointer;
 }
 
 .Facet {
   display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 1rem 0;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
 }
 
 /* .Facet span {
@@ -3018,10 +3016,11 @@ input#Filter-Price-LTE {
 } */
 
 .Facet span {
-  flex-basis: 200px;
+  /* flex-basis: 50%; */
   font-size: 1.8rem;
   text-transform: capitalize;
 }
+
 
 .curreny-formfield {
   padding: revert;

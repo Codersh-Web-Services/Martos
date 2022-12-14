@@ -18,13 +18,7 @@
                 <option value="" name="">Select</option>
                 {%endif%}
                   <option name="{{ value.param_name }}"
-                    value="{{ value.value }}" >{{ name[1] }}  (
-                    {%- if value.count == 1 -%}
-                      {{- 'products.facets.product_count_simple.one' | t: count: value.count -}}
-                    {%- else -%}
-                      {{- 'products.facets.product_count_simple.other' | t: count: value.count -}}
-                    {%- endif -%}
-                    )</option>
+                    value="{{ value.value }}" >{{ name[1] }} </option>
 
                   {% assign prevValue = name[0]%}
                 {%- endfor -%}
@@ -41,13 +35,7 @@
                     name="{{ value.param_name }}"
                     value="{{ value.value }}"
                   >
-                    {{- value.label | escape }} (
-                    {%- if value.count == 1 -%}
-                      {{- 'products.facets.product_count_simple.one' | t: count: value.count -}}
-                    {%- else -%}
-                      {{- 'products.facets.product_count_simple.other' | t: count: value.count -}}
-                    {%- endif -%}
-                    )
+                    {{- value.label | escape }} 
                   </option>
                 {%- endfor -%}
               </select>
@@ -59,6 +47,21 @@
   <input type="submit" value="search">
 </form>
 
+{% style %}
+.Facet > span{
+    color: black;
+    text-align: initial;
+    font-family: 'chivo';
+  -webkit-text-fill-color: white; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: red;
+  font-size: 6rem;
+  font-weight: 600;
+
+  text-transform: uppercase;
+
+}
+{% endstyle %}
 {% javascript %}
   const form = document.querySelector('#desktopfilterform').addEventListener('submit', (e) => {
     e.preventDefault();
