@@ -2976,9 +2976,11 @@ details-disclosure>details {
 } */
 
 form#desktopfilterform {
+  width: 60vw;
+  margin: auto;
   font-size: 1.5rem;
-  width: 100vw;
-  margin: 0 auto;
+  width: 100%;
+  text-align: center;
 }
 
 
@@ -2997,14 +2999,17 @@ input#Filter-Price-LTE {
 .Facet select,
 input#Filter-Price-LTE {
   font-size: 1.5rem;
-  font-weight: 400;
-  padding: 0.2rem 0.3rem;
-  width: 300px;
+  font-weight: 600;
+  padding: .2rem .3rem;
+  color: #d22426;
+  border: 0;
+  width: 200px;
 }
 
 .Facet {
   display: flex;
     align-items: center;
+    justify-content: center;
     margin: 1rem 0;
 }
 
@@ -3030,11 +3035,14 @@ input#Filter-Price-LTE {
 
 form#desktopfilterform input[type='submit'] {
   margin-top: 1rem;
-  padding: 0.5rem 2rem;
-  font-size: 1.5rem;
+  padding: 1rem 4rem;
+  font-size: 1.3rem;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
+  background: #fff;
+  border: 1px solid #d22426;
+  color: #d22426;
 }
 
 @media (max-width : 991px) {
