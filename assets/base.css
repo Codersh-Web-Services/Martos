@@ -3033,7 +3033,6 @@ form#desktopfilterform input[type='submit'] {
   text-transform: uppercase;
   font-weight: 500;
   cursor: pointer;
-  color:#d22426;
 }
 
 @media (max-width : 991px) {
