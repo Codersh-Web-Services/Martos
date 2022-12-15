@@ -1,3 +1,5 @@
+{% comment %} theme-check-disable: LiquidHTMLParsingError {% endcomment %}
+
 {% assign results = collections.all %}
 {% assign enable_filtering = true %}
 <form
@@ -14,20 +16,26 @@
               {% assign name = value.value | split: '__' %}
               {% if prevValue != name[0] %}
             <span>{{- name[0] }} </span>
-            {% comment %} theme-check-disable: LiquidHTMLParsingError {% endcomment %}
             <select name="{{ filter.param_name | escape }}">
               <option value="" name="">Select</option>
-                {%endif%}
+                {%  endif  %}
                   <option name="{{ value.param_name }}"
                     value="{{ value.value }}" >{{ name[1] }} </option>
 
-                  {% assign prevValue = name[0]%}
+                  {% assign prevValue = name[0]  %}
                 {%- endfor -%}
               </select>
           </div>
         {% else %}
           <div class="Facet">
-            <span>{{- filter.label | escape }} </span>
+            {% case filter.label %}
+            {% when "Product type" %}
+               <span> {{ section.settings.product_type_text}}</span>
+             
+           
+            {% else %}
+              <span>{{- filter.label | escape }} </span>
+          {% endcase %}
             <div class="wrapper">
               <select name="{{ filter.param_name | escape }}">
                 <option value="" name="">Select</option>
@@ -47,6 +55,20 @@
   {%- endfor -%}
   <input type="submit" value="search">
 </form>
+
+
+{% comment %} theme-check-enable: LiquidHTMLParsingError {% endcomment %}
+
+{% comment %} <script type="text/x-template" id="field-component"> 
+
+            <select name="${ filter.param_name | escape }">
+              <option value="" name="">Select</option>
+                  <option name="${ value.param_name }"
+                    value="value.value" > ${vendor}</option>
+              </select>
+     
+
+</script> {% endcomment %}
 
 {% style %}
 .Facet > span{
@@ -78,13 +100,27 @@ form#desktopfilterform input[type='checkbox'] {
   width: 40px;
   height: 40px
 }
+form#desktopfilterform select {
+	appearance:none;
+	-webkit-appearance:none;
+	-moz-appearance:none;
+	-ms-appearance:none;
+	background:url('{{'arrow.svg' | asset_url}}');
+	background-repeat:no-repeat;
+  	background-position:right;
+    padding-right: 2rem;
+}
 
+form#desktopfilterform select:active {
+	background:url('{{'arrow-rotated.svg' | asset_url}}');
+  	background-repeat:no-repeat;
+  	background-position:right;
 
+}
 
 .Facet select,
 input#Filter-Price-LTE {
   font-size: 3rem;
-
   background: transparent;
   text-transform: uppercase;
   font-weight: 600;
@@ -92,7 +128,6 @@ input#Filter-Price-LTE {
   color: #d22426;
   border: 0;
   font-family: 'chivo';
-  max-width: 200px;
   cursor: pointer;
 }
 
@@ -155,25 +190,32 @@ form#desktopfilterform input[type='submit'] {
 }
  
 {% endstyle %}
-{% javascript %}
-  const form = document.querySelector('#desktopfilterform').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const formdata = new FormData(document.querySelector('#desktopfilterform'));
-    let searchparams = '?';
-    for (const [key, value] of formdata) {
-      searchparams += `${key}=${value}&`;
-    }
-    filterableparams = searchparams.replace(' ', '+');
-    window.location.href = `/collections/all${filterableparams}`;
+
+<script>
+
+ const form = document.querySelector('#desktopfilterform').addEventListener('submit', (e) => {
+   e.preventDefault();
+   const formdata = new FormData(document.querySelector('#desktopfilterform'));
+   let searchparams = '?';
+   for (const [key, value] of formdata) {
+     searchparams += `${key}=${value}&`;
+   }
+   filterableparams = searchparams.replace(' ', '+');
+   window.location.href = `/collections/all${filterableparams}`;
   });
-{% endjavascript %}
+</script>
 {% schema %}
 {
   "name": "Filter",
   "tag": "section",
   "class": "section",
-  "settings": [],
-
+  "settings": [
+    {
+      "type": "text",
+      "id": "product_type_text",
+      "label": "product type label text: "
+    }
+  ],
   "presets": [
     {
       "name": "Filter",
