@@ -16,8 +16,8 @@
               {% assign name = value.value | split: '__' %}
               {% if prevValue != name[0] %}
             <span>{{- name[0] }} </span>
-            <select name="{{ filter.param_name | escape }}">
-              <option value="" name="">Select</option>
+            <select class="custom-select sources" placeholder="{{ name[1] }}" name="{{ filter.param_name | escape }}">
+        
                 {%  endif  %}
                   <option name="{{ value.param_name }}"
                     value="{{ value.value }}" >{{ name[1] }} </option>
@@ -27,6 +27,7 @@
               </select>
           </div>
         {% else %}
+  
           <div class="Facet">
             {% case filter.label %}
             {% when "Product type" %}
@@ -37,8 +38,7 @@
               <span>{{- filter.label | escape }} </span>
           {% endcase %}
             <div class="wrapper">
-              <select name="{{ filter.param_name | escape }}">
-                <option value="" name="">Select</option>
+              <select    name="{{ filter.param_name | escape }}" class="custom-select sources" placeholder="{{filter.values[0].value}}">
                 {%- for value in filter.values -%}
                   <option
                     name="{{ value.param_name }}"
@@ -139,9 +139,7 @@ input#Filter-Price-LTE {
 }
 
 
-.Facet span {
-  text-transform: capitalize;
-}
+
 
 
 .curreny-formfield {
@@ -189,6 +187,108 @@ form#desktopfilterform input[type='submit'] {
   }
 }
  
+/** Custom Select **/
+.custom-select-wrapper {
+  position: relative;
+  display: inline-block;
+  user-select: none;
+  font-weight: 600;
+
+  color: #d22426;
+   
+  font-family: 'chivo';
+}
+  .custom-select-wrapper select {
+    display: none;
+  }
+  .custom-select {
+    position: relative;
+    display: inline-block;
+    text-transform: uppercase;
+  }
+    .custom-select-trigger {
+      position: relative;
+      display: block;
+      padding: 0 22px ;
+    text-transform: uppercase;
+
+      font-size: 3rem;
+       color: #d22426;
+      cursor: pointer;
+    }
+      .custom-select-trigger:after {
+        position: absolute;
+    display: block;
+    width: 20px;
+    height: 20px;
+    right: 0;
+    top: 25%;
+    content: '';
+    background: url(//cdn.shopify.com/s/files/1/0692/6706/3062/t/6/assets/arrow.svg?v=1955511…);
+        background-repeat: no-repeat;
+    transition: all .4s ease-in-out;
+
+      }
+      .custom-select.opened .custom-select-trigger:after {
+        transform: rotate(180deg);
+      }
+  .custom-options {
+    position: absolute;
+    display: block;
+    top: 100%; left: 0; right: 0;
+    min-width: 100%;
+    margin: 15px 0;
+    text-transform: uppercase;
+
+    border-radius: 4px;
+    box-sizing: border-box;
+    
+    transition: all .4s ease-in-out;
+    
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-10px);
+  }
+  .custom-select.opened .custom-options {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transform: translateY(0);
+        z-index: 1;
+        background: #ffffff3d;
+    backdrop-filter: blur(9px);
+  }
+  
+    .option-hover:before {
+      background: #f9f9f9;
+    }
+    .custom-option {
+      position: relative;
+      display: block;
+    text-transform: uppercase;
+
+      padding: 0 22px;
+      border-bottom: 1px solid #b5b5b5;
+      font-size: 3rem;
+      font-weight: 600;
+            color: #d22426;
+
+      line-height: 47px;
+      cursor: pointer;
+      transition: all .4s ease-in-out;
+    }
+    .custom-option:first-of-type {
+      border-radius: 4px 4px 0 0;
+    }
+    .custom-option:last-of-type {
+      border-bottom: 0;
+      border-radius: 0 0 4px 4px;
+    }
+    .custom-option:hover,
+    .custom-option.selection {
+      background: #f9f9f9;
+    }
 {% endstyle %}
 
 <script>
@@ -203,6 +303,8 @@ form#desktopfilterform input[type='submit'] {
    filterableparams = searchparams.replace(' ', '+');
    window.location.href = `/collections/all${filterableparams}`;
   });
+
+
 </script>
 {% schema %}
 {
