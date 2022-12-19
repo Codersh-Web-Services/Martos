@@ -10,194 +10,187 @@
     {% case filter.type %}
       {% when 'boolean', 'list' %}
         {% if filter.label == 'More filters' %}
-          <div class="Facet">
-            {% assign tag_name = filter.values %}
-            {%- for value in filter.values -%}
-              {% assign name = value.value | split: '__' %}
-              {% if prevValue != name[0] %}
-            <span>{{- name[0] }} </span>
-            <select class="custom-select sources" placeholder="{{ name[1] }}" name="{{ filter.param_name | escape }}">
-        
-                {%  endif  %}
-                  <option name="{{ value.param_name }}"
-                    value="{{ value.value }}" >{{ name[1] }} </option>
-
-                  {% assign prevValue = name[0]  %}
-                {%- endfor -%}
-              </select>
-          </div>
         {% else %}
-  
           <div class="Facet">
             {% case filter.label %}
-            {% when "Product type" %}
-               <span> {{ section.settings.product_type_text}}</span>
-             
-           
-            {% else %}
-              <span>{{- filter.label | escape }} </span>
-          {% endcase %}
-            <div class="wrapper">
-              <select    name="{{ filter.param_name | escape }}" class="custom-select sources" placeholder="{{filter.values[0].value}}">
-                {%- for value in filter.values -%}
-                  <option
-                    name="{{ value.param_name }}"
-                    value="{{ value.value }}"
+              {% when 'Product type' %}
+                <span> {{ section.settings.product_type_text }}</span>
+
+                <div class="wrapper">
+                  <select
+                    v-model="selected_product_type"
+                    name="{{ filter.param_name | escape }}"
+                    class="custom-select sources"
+                    placeholder="{{filter.values[0].value}}"
                   >
-                    {{- value.label | escape }} 
-                  </option>
-                {%- endfor -%}
-              </select>
-            </div>
+                    {%- for value in filter.values -%}
+                      <option
+                        name="{{ value.param_name }}"
+                        value="{{ value.value }}"
+                      >
+                        {{- value.label | escape }}
+                      </option>
+                    {%- endfor -%}
+                  </select>
+                </div>
+            {% endcase %}
           </div>
         {% endif %}
     {% endcase %}
   {%- endfor -%}
+  <div class="Facet">
+    <div class="wrapper">
+      <select
+        name="{{ filter.param_name | escape }}"
+        class="custom-select sources"
+        placeholder=""
+      >
+        <template v-for="item in totalTags">
+          <option v-if="item.includes('Family size')">${item[1]}</option>
+        </template>
+      </select>
+    </div>
+  </div>
+
+  <div class="Facet">
+    <span> {{ section.settings.POUR_text }}</span>
+
+    <div class="wrapper">
+      <select
+        name="{{ filter.param_name | escape }}"
+        class="custom-select sources"
+        placeholder=""
+      >
+        <template v-for="item in totalTags">
+          <option v-if="item.includes('POUR')">${item[1]}</option>
+        </template>
+      </select>
+    </div>
+  </div>
   <input type="submit" value="search">
 </form>
 
-
-{% comment %} theme-check-enable: LiquidHTMLParsingError {% endcomment %}
-
-{% comment %} <script type="text/x-template" id="field-component"> 
-
-            <select name="${ filter.param_name | escape }">
-              <option value="" name="">Select</option>
-                  <option name="${ value.param_name }"
-                    value="value.value" > ${vendor}</option>
-              </select>
-     
-
-</script> {% endcomment %}
-
 {% style %}
-.Facet > span{
+  .Facet > span {
     color: black;
     text-align: initial;
     font-family: 'chivo';
-  -webkit-text-fill-color: white; /* Will override color (regardless of order) */
-  -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: red;
-  font-size: 3rem;
-  font-weight: 600;
+    -webkit-text-fill-color: white; /* Will override color (regardless of order) */
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: red;
+    font-size: 3rem;
+    font-weight: 600;
 
-  text-transform: uppercase !important;
-
-}
-
-form#desktopfilterform {
-  width: 60vw;
-  margin: auto;
-  font-size: 1.5rem;
-  width: 100%;
-  text-align: center;
-}
-
-
-form#desktopfilterform input[type='checkbox'] {
-  display: inline-block;
-  width: auto;
-  width: 40px;
-  height: 40px
-}
-form#desktopfilterform select {
-	appearance:none;
-	-webkit-appearance:none;
-	-moz-appearance:none;
-	-ms-appearance:none;
-	background:url('{{'arrow.svg' | asset_url}}');
-	background-repeat:no-repeat;
-  	background-position:right;
-    padding-right: 2rem;
-}
-
-form#desktopfilterform select:active {
-	background:url('{{'arrow-rotated.svg' | asset_url}}');
-  	background-repeat:no-repeat;
-  	background-position:right;
-
-}
-
-.Facet select,
-input#Filter-Price-LTE {
-  font-size: 3rem;
-  background: transparent;
-  text-transform: uppercase;
-  font-weight: 600;
-  padding: .2rem .3rem;
-  color: #d22426;
-  border: 0;
-  font-family: 'chivo';
-  cursor: pointer;
-}
-
-.Facet {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 1rem 0;
-}
-
-
-
-
-
-.curreny-formfield {
-  padding: revert;
-}
-
-.Facet *:focus-visible {
-  outline: initial;
-  outline-offset: initial;
-  box-shadow: initial;
-}
-
-form#desktopfilterform input[type='submit'] {
-  margin-top: 1rem;
-  padding: 1rem 4rem;
-  font-size: 1.3rem;
-  text-transform: uppercase;
-  font-weight: 600;
-  cursor: pointer;
-  background: #fff;
-  border: 1px solid #d22426;
-  color: #d22426;
-}
-
-@media (max-width : 991px) {
-  .Facet {
-    flex-direction: column;
-  }
-
-  .Facet span {
-    flex-basis: initial;
+    text-transform: uppercase !important;
   }
 
   form#desktopfilterform {
+    width: 60vw;
+    margin: auto;
+    font-size: 1.5rem;
+    width: 100%;
+    text-align: center;
+  }
 
-    font-size: 2rem;
+  form#desktopfilterform input[type='checkbox'] {
+    display: inline-block;
+    width: auto;
+    width: 40px;
+    height: 40px;
+  }
+  form#desktopfilterform select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    background: url('{{'arrow.svg' | asset_url}}');
+    background-repeat: no-repeat;
+    background-position: right;
+    padding-right: 2rem;
+  }
+
+  form#desktopfilterform select:active {
+    background: url('{{'arrow-rotated.svg' | asset_url}}');
+    background-repeat: no-repeat;
+    background-position: right;
   }
 
   .Facet select,
   input#Filter-Price-LTE {
-    font-size: 1rem;
+    font-size: 3rem;
+    background: transparent;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 0.2rem 0.3rem;
+    color: #d22426;
+    border: 0;
+    font-family: 'chivo';
+    cursor: pointer;
   }
-  .Facet select, input#Filter-Price-LTE {
-    font-size: 2rem;
-  }
-}
- 
-/** Custom Select **/
-.custom-select-wrapper {
-  position: relative;
-  display: inline-block;
-  user-select: none;
-  font-weight: 600;
 
-  color: #d22426;
-   
-  font-family: 'chivo';
-}
+  .Facet {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+
+  .curreny-formfield {
+    padding: revert;
+  }
+
+  .Facet *:focus-visible {
+    outline: initial;
+    outline-offset: initial;
+    box-shadow: initial;
+  }
+
+  form#desktopfilterform input[type='submit'] {
+    margin-top: 1rem;
+    padding: 1rem 4rem;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid #d22426;
+    color: #d22426;
+  }
+
+  @media (max-width: 991px) {
+    .Facet {
+      flex-direction: column;
+    }
+
+    .Facet span {
+      flex-basis: initial;
+    }
+
+    form#desktopfilterform {
+      font-size: 2rem;
+    }
+
+    .Facet select,
+    input#Filter-Price-LTE {
+      font-size: 1rem;
+    }
+    .Facet select,
+    input#Filter-Price-LTE {
+      font-size: 2rem;
+    }
+  }
+
+  /** Custom Select **/
+  .custom-select-wrapper {
+    position: relative;
+    display: inline-block;
+    user-select: none;
+    font-weight: 600;
+
+    color: #d22426;
+
+    font-family: 'chivo';
+  }
   .custom-select-wrapper select {
     display: none;
   }
@@ -206,18 +199,18 @@ form#desktopfilterform input[type='submit'] {
     display: inline-block;
     text-transform: uppercase;
   }
-    .custom-select-trigger {
-      position: relative;
-      display: block;
-      padding: 0 22px ;
+  .custom-select-trigger {
+    position: relative;
+    display: block;
+    padding: 0 22px;
     text-transform: uppercase;
 
-      font-size: 3rem;
-       color: #d22426;
-      cursor: pointer;
-    }
-      .custom-select-trigger:after {
-        position: absolute;
+    font-size: 3rem;
+    color: #d22426;
+    cursor: pointer;
+  }
+  .custom-select-trigger:after {
+    position: absolute;
     display: block;
     width: 20px;
     height: 20px;
@@ -225,26 +218,27 @@ form#desktopfilterform input[type='submit'] {
     top: 25%;
     content: '';
     background: url(//cdn.shopify.com/s/files/1/0692/6706/3062/t/6/assets/arrow.svg?v=1955511…);
-        background-repeat: no-repeat;
-    transition: all .4s ease-in-out;
-
-      }
-      .custom-select.opened .custom-select-trigger:after {
-        transform: rotate(180deg);
-      }
+    background-repeat: no-repeat;
+    transition: all 0.4s ease-in-out;
+  }
+  .custom-select.opened .custom-select-trigger:after {
+    transform: rotate(180deg);
+  }
   .custom-options {
     position: absolute;
     display: block;
-    top: 100%; left: 0; right: 0;
+    top: 100%;
+    left: 0;
+    right: 0;
     min-width: 100%;
     margin: 15px 0;
     text-transform: uppercase;
 
     border-radius: 4px;
     box-sizing: border-box;
-    
-    transition: all .4s ease-in-out;
-    
+
+    transition: all 0.4s ease-in-out;
+
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -255,56 +249,115 @@ form#desktopfilterform input[type='submit'] {
     visibility: visible;
     pointer-events: all;
     transform: translateY(0);
-        z-index: 1;
-        background: #ffffff3d;
+    z-index: 1;
+    background: #ffffff3d;
     backdrop-filter: blur(9px);
   }
-  
-    .option-hover:before {
-      background: #f9f9f9;
-    }
-    .custom-option {
-      position: relative;
-      display: block;
+
+  .option-hover:before {
+    background: #f9f9f9;
+  }
+  .custom-option {
+    position: relative;
+    display: block;
     text-transform: uppercase;
 
-      padding: 0 22px;
-      border-bottom: 1px solid #b5b5b5;
-      font-size: 3rem;
-      font-weight: 600;
-            color: #d22426;
+    padding: 0 22px;
+    border-bottom: 1px solid #b5b5b5;
+    font-size: 3rem;
+    font-weight: 600;
+    color: #d22426;
 
-      line-height: 47px;
-      cursor: pointer;
-      transition: all .4s ease-in-out;
-    }
-    .custom-option:first-of-type {
-      border-radius: 4px 4px 0 0;
-    }
-    .custom-option:last-of-type {
-      border-bottom: 0;
-      border-radius: 0 0 4px 4px;
-    }
-    .custom-option:hover,
-    .custom-option.selection {
-      background: #f9f9f9;
-    }
+    line-height: 47px;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+  }
+  .custom-option:first-of-type {
+    border-radius: 4px 4px 0 0;
+  }
+  .custom-option:last-of-type {
+    border-bottom: 0;
+    border-radius: 0 0 4px 4px;
+  }
+  .custom-option:hover,
+  .custom-option.selection {
+    background: #f9f9f9;
+  }
 {% endstyle %}
-
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.45/vue.global.min.js"
+  integrity="sha512-Pdnl+dKWHA0jEnmhogUHlOw3FqDeujiEc3XQDkvMrPUAvytiU2cZiknw2xDPgDS+u2prg2n+6eKz3CPG588gTQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"
+  integrity="sha512-zJYu9ICC+mWF3+dJ4QC34N9RA0OVS1XtPbnf6oXlvGrLGNB8egsEzu/5wgG90I61hOOKvcywoLzwNmPqGAdATA=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
 <script>
-
- const form = document.querySelector('#desktopfilterform').addEventListener('submit', (e) => {
-   e.preventDefault();
-   const formdata = new FormData(document.querySelector('#desktopfilterform'));
-   let searchparams = '?';
-   for (const [key, value] of formdata) {
-     searchparams += `${key}=${value}&`;
-   }
-   filterableparams = searchparams.replace(' ', '+');
-   window.location.href = `/collections/all${filterableparams}`;
+  const form = document.querySelector('#desktopfilterform').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formdata = new FormData(document.querySelector('#desktopfilterform'));
+    let searchparams = '?';
+    for (const [key, value] of formdata) {
+      searchparams += `${key}=${value}&`;
+    }
+    filterableparams = searchparams.replace(' ', '+');
+    window.location.href = `/collections/all${filterableparams}`;
   });
 
+  const vueApp = Vue.createApp({
+    // add a delimiter to replace shopify's liquid output syntax
+    delimiters: ['${', '}'],
+    data() {
+      return {
+        selected_product_type: '',
+        purefilters: [],
+        totalTags: [],
+        rendererdFilters: [],
+      };
+    },
+    watch: {
+      // whenever filter changes, this function will run
+      selected_product_type(newFilter, oldFilter) {
+        console.log(newFilter);
+        this.totalTags.length = 0;
 
+        this.rendererdFilters.map((filterItem) => {
+          if (filterItem.product_type == this.selected_product_type) {
+            let { tags } = filterItem;
+            for (let tag of tags) {
+              let extractedTag = tag.split('__');
+              this.totalTags.push(extractedTag);
+            }
+          }
+        });
+      },
+    },
+    // fetch products from collection
+    mounted() {
+      axios
+        .get('/collections/all/products.json')
+        .then((response) => {
+          response.data.products.forEach((element) => {
+            let { tags, product_type, vendor } = element;
+
+            this.purefilters.unshift({ tags, product_type, vendor, show: true });
+            this.rendererdFilters.unshift({ tags, product_type, vendor, show: true });
+          });
+          this.rendererdFilters.map((filterItem) => {
+            let { tags } = filterItem;
+            for (let tag of tags) {
+              let extractedTag = tag.split('__');
+              this.totalTags.push(extractedTag);
+            }
+          });
+        })
+        .catch((error) => console.log(error));
+    },
+  }).mount('#desktopfilterform');
 </script>
 {% schema %}
 {
@@ -316,6 +369,11 @@ form#desktopfilterform input[type='submit'] {
       "type": "text",
       "id": "product_type_text",
       "label": "product type label text: "
+    },
+    {
+      "type": "text",
+      "id": "POUR_text",
+      "label": "POUR label text: "
     }
   ],
   "presets": [
