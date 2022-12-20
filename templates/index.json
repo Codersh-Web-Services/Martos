@@ -82,7 +82,9 @@
       "type": "homepage-filter",
       "settings": {
         "product_type_text": "JE CHERCHE",
-        "POUR_text": "POUR"
+        "POUR_text": "POUR",
+        "filter2Name": "POUR",
+        "filter1Name": "Family size"
       }
     },
     "featured_collection": {

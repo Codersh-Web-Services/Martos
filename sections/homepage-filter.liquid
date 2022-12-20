@@ -60,7 +60,7 @@
               options.option2Selected = key;
               options.option2 = false;
             "
-            v-if="val.includes('Family size')"
+            v-if="val.includes('{{section.settings.filter1Name}}')"
           >
             ${key}
           </div>
@@ -93,7 +93,7 @@
               options.option1Selected = key;
               options.option1 = false;
             "
-            v-if="val.includes('POUR')"
+            v-if="val.includes('{{section.settings.filter2Name}}')"
           >
             ${key}
           </div>
@@ -333,6 +333,11 @@
 <script>
   
   
+  
+  
+  
+  
+  
 
   const vueApp = Vue.createApp({
     // add a delimiter to replace shopify's liquid output syntax
@@ -405,7 +410,7 @@
     methods: {
       submit() {
       
-      searchparams = `?${this.options.product_type_name}=${this.selected_product_type}&${this.options.tags_filterName}=POUR__${this.options.option1Selected}&${this.options.tags_filterName}=Family size__${this.options.option2Selected}`;
+      searchparams = `?${this.options.product_type_name}=${this.selected_product_type}&${this.options.tags_filterName}={{section.settings.filter2Name}}__${this.options.option1Selected}&${this.options.tags_filterName}={{section.settings.filter1Name}}__${this.options.option2Selected}`;
       console.log(searchparams)
     let filterableparams = searchparams.replaceAll(' ', '+');
       console.log(filterableparams)
@@ -414,6 +419,11 @@
       },
     },
   }).mount('#desktopfilterform');
+
+
+
+
+
 
 
 </script>
@@ -432,6 +442,17 @@
       "type": "text",
       "id": "POUR_text",
       "label": "POUR label text: "
+    },
+
+    {
+      "type": "text",
+      "id": "filter1Name",
+      "label": "Filter 1 name in the tags:(before the '__') "
+    },
+    {
+      "type": "text",
+      "id": "filter2Name",
+      "label": "Filter 2 name in the tags:(before the '__') "
     }
   ],
   "presets": [
