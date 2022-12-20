@@ -132,35 +132,6 @@
     width: 40px;
     height: 40px;
   }
-  #desktopfilterform select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -ms-appearance: none;
-    background: url('{{'arrow.svg' | asset_url}}');
-    background-repeat: no-repeat;
-    background-position: right;
-    padding-right: 2rem;
-  }
-
-  #desktopfilterform select:active {
-    background: url('{{'arrow-rotated.svg' | asset_url}}');
-    background-repeat: no-repeat;
-    background-position: right;
-  }
-
-  .Facet select,
-  input#Filter-Price-LTE {
-    font-size: 3rem;
-    background: transparent;
-    text-transform: uppercase;
-    font-weight: 600;
-    padding: 0.2rem 0.3rem;
-    color: #d22426;
-    border: 0;
-    font-family: 'chivo';
-    cursor: pointer;
-  }
 
   .Facet {
     display: flex;
@@ -213,109 +184,68 @@
       font-size: 2rem;
     }
   }
+  /* misc css  */
 
-  /** Custom Select **/
-  .custom-select-wrapper {
+  .product-option-row {
     position: relative;
-    display: inline-block;
     user-select: none;
+  }
+
+  .product-option-label {
+    position: relative;
+    cursor: pointer;
+    background-color: white;
+    font-size: 16px;
+    width: auto;
+    text-align: left;
+    font-size: 3rem;
+    text-transform: uppercase;
     font-weight: 600;
-
+    padding: 0.2rem 0.3rem;
     color: #d22426;
+  }
 
-    font-family: 'chivo';
-  }
-  .custom-select-wrapper select {
-    display: none;
-  }
-  .custom-select {
-    position: relative;
-    display: inline-block;
+  .add-to-cart-button {
     text-transform: uppercase;
   }
-  .custom-select-trigger {
-    position: relative;
-    display: block;
-    padding: 0 22px;
-    text-transform: uppercase;
 
+  .add-to-cart-button:hover {
+    background-color: black;
+    color: white;
+  }
+
+  .product-option-list {
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    width: max-content;
+    padding: 2rem;
+    left: -30px;
+    background-color: white;
+    text-transform: uppercase;
+    font-weight: 600;
     font-size: 3rem;
     color: #d22426;
+    transition: all 0.4s;
+  }
+
+  .product-option-item {
     cursor: pointer;
   }
-  .custom-select-trigger:after {
-    position: absolute;
-    display: block;
-    width: 20px;
-    height: 20px;
-    right: 0;
-    top: 25%;
-    content: '';
-    background: url(//cdn.shopify.com/s/files/1/0692/6706/3062/t/6/assets/arrow.svg?v=1955511…);
-    background-repeat: no-repeat;
-    transition: all 0.4s ease-in-out;
+
+  .Facet img {
+    transition: all 0.4s;
+    margin-left: 5px;
+    margin-bottom: 2px;
   }
-  .custom-select.opened .custom-select-trigger:after {
+
+  .arrowActive {
+    transform-origin: 50% 50%;
     transform: rotate(180deg);
   }
-  .custom-options {
-    position: absolute;
-    display: block;
-    top: 100%;
-    left: 0;
-    right: 0;
-    min-width: 100%;
-    margin: 15px 0;
-    text-transform: uppercase;
 
-    border-radius: 4px;
-    box-sizing: border-box;
-
-    transition: all 0.4s ease-in-out;
-
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transform: translateY(-10px);
-  }
-  .custom-select.opened .custom-options {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: all;
-    transform: translateY(0);
-    z-index: 1;
-    background: #ffffff3d;
-    backdrop-filter: blur(9px);
-  }
-
-  .option-hover:before {
-    background: #f9f9f9;
-  }
-  .custom-option {
-    position: relative;
-    display: block;
-    text-transform: uppercase;
-
-    padding: 0 22px;
-    border-bottom: 1px solid #b5b5b5;
-    font-size: 3rem;
-    font-weight: 600;
-    color: #d22426;
-
-    line-height: 47px;
-    cursor: pointer;
-    transition: all 0.4s ease-in-out;
-  }
-  .custom-option:first-of-type {
-    border-radius: 4px 4px 0 0;
-  }
-  .custom-option:last-of-type {
-    border-bottom: 0;
-    border-radius: 0 0 4px 4px;
-  }
-  .custom-option:hover,
-  .custom-option.selection {
-    background: #f9f9f9;
+  .product-option-item:hover {
+    background: #ededed;
   }
 {% endstyle %}
 <script
@@ -338,13 +268,24 @@
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   const vueApp = Vue.createApp({
     // add a delimiter to replace shopify's liquid output syntax
     delimiters: ['${', '}'],
     data() {
       return {
-        selected_product_type: 'Lave Linge',
+        selected_product_type: '{{section.settings.firstInputPlaceHolder}}',
         purefilters: [],
         totalTags: new Map(),
         rendererdFilters: [],
@@ -352,9 +293,9 @@
         options: {
           option1: false,
           product_type_name : 'filter.p.product_type',
-          option1Selected: '6 Personalize',
+          option1Selected: '',
           option2: false,
-          option2Selected: 'Family Size',
+          option2Selected: '',
           product_type: false,
           {% comment %} filters names {% endcomment %}
           tags_filterName: 'filter.p.tag'
@@ -374,10 +315,10 @@
               let extractedTag = tag.split('__');
               this.totalTags.set(extractedTag[1], extractedTag[0]);
 
-              if (extractedTag[0] == 'Family size') {
+              if (extractedTag[0] == '{{section.settings.filter1Name}}') {
                 this.options.option2Selected = extractedTag[1];
               }
-              if (extractedTag[0] == 'POUR') {
+              if (extractedTag[0] == '{{section.settings.filter2Name}}') {
                 this.options.option1Selected = extractedTag[1];
               }
             }
@@ -402,6 +343,12 @@
             for (let tag of tags) {
               let extractedTag = tag.split('__');
               this.totalTags.set(extractedTag[1], extractedTag[0]);
+                 if (extractedTag[0] == '{{section.settings.filter1Name}}') {
+                this.options.option2Selected = extractedTag[1];
+              }
+              if (extractedTag[0] == '{{section.settings.filter2Name}}') {
+                this.options.option1Selected = extractedTag[1];
+              }
             }
           });
         })
@@ -426,6 +373,17 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 </script>
 {% schema %}
 {
@@ -436,12 +394,18 @@
     {
       "type": "text",
       "id": "product_type_text",
-      "label": "product type label text: "
+      "label": "first label text: "
     },
     {
       "type": "text",
+      "id": "firstInputPlaceHolder",
+      "label": "first Input placeholder text: "
+    },
+
+    {
+      "type": "text",
       "id": "POUR_text",
-      "label": "POUR label text: "
+      "label": "3rd label text: "
     },
 
     {
