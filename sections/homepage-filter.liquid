@@ -393,8 +393,8 @@
           response.data.products.forEach((element) => {
             let { tags, product_type, vendor } = element;
 
-            this.purefilters.unshift({ tags, product_type, vendor, show: true });
-            this.rendererdFilters.unshift({ tags, product_type, vendor, show: true });
+            this.purefilters.unshift({ tags, product_type, vendor });
+            this.rendererdFilters.unshift({ tags, product_type, vendor });
           });
           this.rendererdFilters.map((filterItem) => {
             let { tags } = filterItem;
