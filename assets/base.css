@@ -3022,6 +3022,7 @@ details-disclosure>details {
 .Facet img {
   transition: all 0.4s;
   margin-left: 5px;
+  margin-bottom: 2px;
 }
 
 .arrowActive {
