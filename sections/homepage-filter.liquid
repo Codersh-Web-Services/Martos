@@ -5,66 +5,100 @@
 <form
   id="desktopfilterform"
 >
-  {%- for filter in results.filters -%}
-    {%- assign total_active_values = total_active_values | plus: filter.active_values.size -%}
-    {% case filter.type %}
-      {% when 'boolean', 'list' %}
-        {% if filter.label == 'More filters' %}
-        {% else %}
-          <div class="Facet">
-            {% case filter.label %}
-              {% when 'Product type' %}
-                <span> {{ section.settings.product_type_text }}</span>
-
-                <div class="wrapper">
-                  <select
-                    v-model="selected_product_type"
-                    name="{{ filter.param_name | escape }}"
-                    class="custom-select sources"
-                    placeholder="{{filter.values[0].value}}"
-                  >
-                    {%- for value in filter.values -%}
-                      <option
-                        name="{{ value.param_name }}"
-                        value="{{ value.value }}"
-                      >
-                        {{- value.label | escape }}
-                      </option>
-                    {%- endfor -%}
-                  </select>
-                </div>
-            {% endcase %}
-          </div>
-        {% endif %}
-    {% endcase %}
-  {%- endfor -%}
   <div class="Facet">
-    <div class="wrapper">
-      <select
-        name="{{ filter.param_name | escape }}"
-        class="custom-select sources"
-        placeholder=""
+    <span> {{ section.settings.product_type_text }}</span>
+    <div class="product-option-row">
+      <div
+        class="product-option-label"
+        @click="options.product_type = !options.product_type; options.option1 = false; options.option2= false;"
+        :class="{ labelActive: options.product_type }"
       >
-        <template v-for="item in totalTags">
-          <option v-if="item.includes('Family size')">${item[1]}</option>
+        <span> ${selected_product_type}</span>
+        <img :class="{ arrowActive: options.product_type }" src="{{'arrow.svg' | asset_url}}" alt="arrow svg">
+      </div>
+      <div
+        name="{{ filter.param_name | escape }}"
+        class="product-option-list"
+        placeholder=""
+        v-if="options.product_type"
+      >
+        <template v-for="item of product_type">
+          <div
+            class="product-option-item"
+            @click="
+              selected_product_type = item;
+              options.product_type = false;
+            "
+          >
+            ${item}
+          </div>
         </template>
-      </select>
+      </div>
     </div>
   </div>
 
   <div class="Facet">
-    <span> {{ section.settings.POUR_text }}</span>
-
-    <div class="wrapper">
-      <select
-        name="{{ filter.param_name | escape }}"
-        class="custom-select sources"
-        placeholder=""
+    <div class="product-option-row">
+      <div
+        class="product-option-label"
+        @click="options.option2 = !options.option2; options.option1 = false; options.product_type = false"
+        :class="{ labelActive: options.option2 }"
       >
-        <template v-for="item in totalTags">
-          <option v-if="item.includes('POUR')">${item[1]}</option>
+        <span> ${options.option2Selected}</span>
+        <img :class="{ arrowActive: options.option2 }" src="{{'arrow.svg' | asset_url}}" alt="arrow svg">
+      </div>
+      <div
+        name="{{ filter.param_name | escape }}"
+        class="product-option-list"
+        placeholder=""
+        v-if="options.option2"
+      >
+        <template v-for="[key, val] of totalTags">
+          <div
+            class="product-option-item"
+            @click="
+              options.option2Selected = key;
+              options.option2 = false;
+            "
+            v-if="val.includes('Family size')"
+          >
+            ${key}
+          </div>
         </template>
-      </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="Facet">
+    <span> {{ section.settings.POUR_text }} </span>
+    <div class="product-option-row">
+      <div
+        class="product-option-label"
+        @click="options.option1 = !options.option1; options.option2 = false; options.product_type = false;"
+        :class="{ labelActive: options.option1 }"
+      >
+        <span> ${options.option1Selected}</span>
+        <img :class="{ arrowActive: options.option1 }" src="{{'arrow.svg' | asset_url}}" alt="arrow svg">
+      </div>
+      <div
+        name="{{ filter.param_name | escape }}"
+        class="product-option-list"
+        placeholder=""
+        v-if="options.option1"
+      >
+        <template v-for="[key, val] of totalTags">
+          <div
+            class="product-option-item"
+            @click="
+              options.option1Selected = key;
+              options.option1 = false;
+            "
+            v-if="val.includes('POUR')"
+          >
+            ${key}
+          </div>
+        </template>
+      </div>
     </div>
   </div>
   <input type="submit" value="search">
@@ -313,30 +347,45 @@
     delimiters: ['${', '}'],
     data() {
       return {
-        selected_product_type: '',
+        selected_product_type: 'Lave Linge',
         purefilters: [],
-        totalTags: [],
+        totalTags: new Map(),
         rendererdFilters: [],
+        product_type: new Set(),
+        options: {
+          option1: false,
+          option1Selected: '6 Personalize',
+          option2: false,
+          option2Selected: 'Family Size',
+          product_type: false,
+        },
       };
     },
     watch: {
       // whenever filter changes, this function will run
       selected_product_type(newFilter, oldFilter) {
         console.log(newFilter);
-        this.totalTags.length = 0;
+        this.totalTags.clear();
 
         this.rendererdFilters.map((filterItem) => {
           if (filterItem.product_type == this.selected_product_type) {
             let { tags } = filterItem;
             for (let tag of tags) {
               let extractedTag = tag.split('__');
-              this.totalTags.push(extractedTag);
+              this.totalTags.set(extractedTag[1], extractedTag[0]);
+
+              if (extractedTag[0] == 'Family size') {
+                this.options.option2Selected = extractedTag[1];
+              }
+              if (extractedTag[0] == 'POUR') {
+                this.options.option1Selected = extractedTag[1];
+              }
             }
           }
         });
       },
     },
-    // fetch products from collection
+    // fetch products
     mounted() {
       axios
         .get('/collections/all/products.json')
@@ -349,9 +398,10 @@
           });
           this.rendererdFilters.map((filterItem) => {
             let { tags } = filterItem;
+            this.product_type.add(filterItem.product_type);
             for (let tag of tags) {
               let extractedTag = tag.split('__');
-              this.totalTags.push(extractedTag);
+              this.totalTags.set(extractedTag[1], extractedTag[0]);
             }
           });
         })
