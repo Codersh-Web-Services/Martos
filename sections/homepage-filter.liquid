@@ -2,7 +2,7 @@
 
 {% assign results = collections.all %}
 {% assign enable_filtering = true %}
-<form
+<div
   id="desktopfilterform"
 >
   <div class="Facet">
@@ -17,7 +17,7 @@
         <img :class="{ arrowActive: options.product_type }" src="{{'arrow.svg' | asset_url}}" alt="arrow svg">
       </div>
       <div
-        name="{{ filter.param_name | escape }}"
+        name=""
         class="product-option-list"
         placeholder=""
         v-if="options.product_type"
@@ -101,8 +101,8 @@
       </div>
     </div>
   </div>
-  <input type="submit" value="search">
-</form>
+  <input type="submit" @click="submit" value="search">
+</div>
 
 {% style %}
   .Facet > span {
@@ -118,7 +118,7 @@
     text-transform: uppercase !important;
   }
 
-  form#desktopfilterform {
+  #desktopfilterform {
     width: 60vw;
     margin: auto;
     font-size: 1.5rem;
@@ -126,13 +126,13 @@
     text-align: center;
   }
 
-  form#desktopfilterform input[type='checkbox'] {
+  #desktopfilterform input[type='checkbox'] {
     display: inline-block;
     width: auto;
     width: 40px;
     height: 40px;
   }
-  form#desktopfilterform select {
+  #desktopfilterform select {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -143,7 +143,7 @@
     padding-right: 2rem;
   }
 
-  form#desktopfilterform select:active {
+  #desktopfilterform select:active {
     background: url('{{'arrow-rotated.svg' | asset_url}}');
     background-repeat: no-repeat;
     background-position: right;
@@ -179,7 +179,7 @@
     box-shadow: initial;
   }
 
-  form#desktopfilterform input[type='submit'] {
+  #desktopfilterform input[type='submit'] {
     margin-top: 1rem;
     padding: 1rem 4rem;
     font-size: 1.3rem;
@@ -200,7 +200,7 @@
       flex-basis: initial;
     }
 
-    form#desktopfilterform {
+    #desktopfilterform {
       font-size: 2rem;
     }
 
@@ -331,16 +331,8 @@
   referrerpolicy="no-referrer"
 ></script>
 <script>
-  const form = document.querySelector('#desktopfilterform').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const formdata = new FormData(document.querySelector('#desktopfilterform'));
-    let searchparams = '?';
-    for (const [key, value] of formdata) {
-      searchparams += `${key}=${value}&`;
-    }
-    filterableparams = searchparams.replace(' ', '+');
-    window.location.href = `/collections/all${filterableparams}`;
-  });
+  
+  
 
   const vueApp = Vue.createApp({
     // add a delimiter to replace shopify's liquid output syntax
@@ -354,10 +346,13 @@
         product_type: new Set(),
         options: {
           option1: false,
+          product_type_name : 'filter.p.product_type',
           option1Selected: '6 Personalize',
           option2: false,
           option2Selected: 'Family Size',
           product_type: false,
+          {% comment %} filters names {% endcomment %}
+          tags_filterName: 'filter.p.tag'
         },
       };
     },
@@ -407,7 +402,20 @@
         })
         .catch((error) => console.log(error));
     },
+    methods: {
+      submit() {
+      
+      searchparams = `?${this.options.product_type_name}=${this.selected_product_type}&${this.options.tags_filterName}=POUR__${this.options.option1Selected}&${this.options.tags_filterName}=Family size__${this.options.option2Selected}`;
+      console.log(searchparams)
+    let filterableparams = searchparams.replaceAll(' ', '+');
+      console.log(filterableparams)
+
+    window.location.href = `/collections/all${filterableparams}`;
+      },
+    },
   }).mount('#desktopfilterform');
+
+
 </script>
 {% schema %}
 {
