@@ -2974,16 +2974,6 @@ details-disclosure>details {
   user-select: none;
 }
 
-.product-option-label::before {
-  content: "";
-  width: 11px;
-  height: 11px;
-  position: absolute;
-  right: 25px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: url(//cdn.shopify.com/s/files/1/0692/6706/3062/t/6/assets/arrow.svg?v=1955511…);
-}
 
 .product-option-label {
   position: relative;
