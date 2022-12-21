@@ -163,9 +163,9 @@
   }
 
   @media (max-width: 991px) {
-    .Facet {
+/*     .Facet {
       flex-direction: column;
-    }
+    } */
 
     .Facet span {
       flex-basis: initial;
@@ -247,6 +247,16 @@
   .product-option-item:hover {
     background: #ededed;
   }
+
+    @media (max-width: 420px) {
+      .Facet > span {
+        font-size: 2rem;
+      }
+
+      .product-option-list {
+        font-size: 2rem;
+      }
+    }
 {% endstyle %}
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.45/vue.global.prod.min.js"
