@@ -163,9 +163,9 @@
   }
 
   @media (max-width: 991px) {
-    .Facet {
+/*     .Facet {
       flex-direction: column;
-    }
+    } */
 
     .Facet span {
       flex-basis: initial;
@@ -195,7 +195,7 @@
     position: relative;
     cursor: pointer;
     background-color: white;
-    font-size: 16px;
+/*     font-size: 16px; */
     width: auto;
     text-align: left;
     font-size: 3rem;
@@ -221,7 +221,8 @@
     width: max-content;
     padding: 2rem;
     left: -30px;
-    background-color: white;
+/*     background-color: white; */
+    background-color: #f6f6f6;
     text-transform: uppercase;
     font-weight: 600;
     font-size: 3rem;
@@ -231,6 +232,7 @@
 
   .product-option-item {
     cursor: pointer;
+    padding: 0 1.2rem
   }
 
   .Facet img {
@@ -247,6 +249,24 @@
   .product-option-item:hover {
     background: #ededed;
   }
+
+    @media (max-width: 420px) {
+      .Facet > span {
+        font-size: 2rem;
+      }
+
+      .product-option-list {
+        font-size: 2rem;
+      }
+
+      .product-option-label {
+         font-size: 2rem;
+      }
+
+      .Facet img {
+        margin-bottom: 0;
+      }
+    }
 {% endstyle %}
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.45/vue.global.prod.min.js"
