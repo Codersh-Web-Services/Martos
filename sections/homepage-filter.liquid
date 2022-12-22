@@ -280,6 +280,8 @@
   
   
   
+  
+  
 
   const vueApp = Vue.createApp({
     // add a delimiter to replace shopify's liquid output syntax
@@ -357,8 +359,16 @@
     },
     methods: {
       submit() {
+      let firstOption = ""
+      let SecondOption = ""
+      if (this.options.option1Selected){
+      firstOption = `${this.options.tags_filterName}={{section.settings.filter2Name}}__${this.options.option1Selected}`
+      }
+      if (this.options.option2Selected){
+      SecondOption = `${this.options.tags_filterName}={{section.settings.filter1Name}}__${this.options.option2Selected}`
+    }
       
-      searchparams = `?${this.options.product_type_name}=${this.selected_product_type}&${this.options.tags_filterName}={{section.settings.filter2Name}}__${this.options.option1Selected}&${this.options.tags_filterName}={{section.settings.filter1Name}}__${this.options.option2Selected}`;
+      searchparams = `?${this.options.product_type_name}=${this.selected_product_type}&${firstOption}&${SecondOption}`;
       console.log(searchparams)
     let filterableparams = searchparams.replaceAll(' ', '+');
       console.log(filterableparams)
@@ -367,6 +377,8 @@
       },
     },
   }).mount('#desktopfilterform');
+
+
 
 
 
