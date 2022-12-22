@@ -163,7 +163,7 @@
   }
 
   @media (max-width: 991px) {
-/*     .Facet {
+    /*     .Facet {
       flex-direction: column;
     } */
 
@@ -195,7 +195,7 @@
     position: relative;
     cursor: pointer;
     background-color: white;
-/*     font-size: 16px; */
+    /*     font-size: 16px; */
     width: auto;
     text-align: left;
     font-size: 3rem;
@@ -221,7 +221,7 @@
     width: max-content;
     padding: 2rem;
     left: -30px;
-/*     background-color: white; */
+    /*     background-color: white; */
     background-color: #f6f6f6;
     text-transform: uppercase;
     font-weight: 600;
@@ -232,7 +232,7 @@
 
   .product-option-item {
     cursor: pointer;
-    padding: 0 1.2rem
+    padding: 0 1.2rem;
   }
 
   .Facet img {
@@ -250,23 +250,23 @@
     background: #ededed;
   }
 
-    @media (max-width: 420px) {
-      .Facet > span {
-        font-size: 2rem;
-      }
-
-      .product-option-list {
-        font-size: 2rem;
-      }
-
-      .product-option-label {
-         font-size: 2rem;
-      }
-
-      .Facet img {
-        margin-bottom: 0;
-      }
+  @media (max-width: 420px) {
+    .Facet > span {
+      font-size: 2rem;
     }
+
+    .product-option-list {
+      font-size: 2rem;
+    }
+
+    .product-option-label {
+      font-size: 2rem;
+    }
+
+    .Facet img {
+      margin-bottom: 0;
+    }
+  }
 {% endstyle %}
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.45/vue.global.prod.min.js"
@@ -281,6 +281,7 @@
   referrerpolicy="no-referrer"
 ></script>
 <script>
+  
   
   
   
@@ -382,13 +383,13 @@
       let firstOption = ""
       let SecondOption = ""
       if (this.options.option1Selected){
-      firstOption = `${this.options.tags_filterName}={{section.settings.filter2Name}}__${this.options.option1Selected}`
+      firstOption = `&${this.options.tags_filterName}={{section.settings.filter2Name}}__${this.options.option1Selected}`
       }
       if (this.options.option2Selected){
       SecondOption = `${this.options.tags_filterName}={{section.settings.filter1Name}}__${this.options.option2Selected}`
     }
       
-      searchparams = `?${this.options.product_type_name}=${this.selected_product_type}&${firstOption}&${SecondOption}`;
+      searchparams = `?${this.options.product_type_name}=${this.selected_product_type}${firstOption}&${SecondOption}`;
       console.log(searchparams)
     let filterableparams = searchparams.replaceAll(' ', '+');
       console.log(filterableparams)
@@ -397,6 +398,7 @@
       },
     },
   }).mount('#desktopfilterform');
+
 
 
 
